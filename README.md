@@ -1,0 +1,5 @@
+# nth
+
+## License
+
+[MIT](./LICENSE)
