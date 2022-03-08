@@ -4,6 +4,11 @@ function isInt (x:any) : boolean {
         && (x | 0) === x
 }
 
+function isNonNegInt (x:any) : boolean {
+    return isInt(x) && x >= 0
+}
+
 export {
     isInt,
+    isNonNegInt,
 }

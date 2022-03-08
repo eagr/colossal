@@ -1,4 +1,4 @@
-import { isInt } from './util'
+import { isInt, isNonNegInt } from './util'
 
 function gcd (x:number, y:number) : number {
     if (!isInt(x) || !isInt(y)) throw new Error(`both numbers should be integers`)
@@ -19,6 +19,13 @@ function gcd (x:number, y:number) : number {
     return Math.abs(s)
 }
 
+function lcm (x:number, y:number) : number {
+    if (!isNonNegInt(x) || !isNonNegInt(y)) throw new Error(`both numbers should be non-negative integers`)
+    if (x === 0 || y === 0) return 0
+    return x * y / gcd(x, y)
+}
+
 export {
     gcd,
+    lcm,
 }
