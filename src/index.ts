@@ -1,5 +1,18 @@
 import { isInt, isNonNegInt, isPosInt } from './util'
 
+function isPrime (x:number) : boolean {
+    if (!isInt(x)) throw new Error('`x` should be an integer')
+    if (x <= 3) return x > 1
+    if (x % 2 === 0 || x % 3 === 0) return false
+
+    const hi = Math.floor(Math.sqrt(x))
+    for (let i = 5; i <= hi; i += 6) {
+        if (x % i === 0 || x % (i + 2) === 0) return false
+    }
+
+    return true
+}
+
 function gcd (x:number, y:number) : number {
     if (!isInt(x) || !isInt(y)) throw new Error('both numbers should be integers')
     if (x === 0 && y === 0) throw new Error('gcd(0, 0) is undefined')
@@ -39,6 +52,7 @@ function sumOf (n:number, p=1) : number {
 }
 
 export {
+    isPrime,
     gcd,
     lcm,
     sumOf,
