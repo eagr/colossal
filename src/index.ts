@@ -9,8 +9,29 @@ function isPrime (x:number) : boolean {
     for (let i = 5; i <= hi; i += 6) {
         if (x % i === 0 || x % (i + 2) === 0) return false
     }
-
     return true
+}
+
+function sieveOfEratosthenes (limit:number) : boolean[] {
+    if (!isInt(limit) || limit < 2) throw new Error('`limit` should be an integer no less than 2')
+
+    const sieve = new Array(limit)
+    for (let i = 0; i < limit; i += 2) sieve[i] = false
+    if (limit > 1) sieve[1] = false
+    if (limit > 2) sieve[2] = true
+    for (let i = 3; i < limit; i += 2) sieve[i] = true
+
+    const maxOdd = limit - 1 - (limit % 2)
+    const cross = Math.floor(Math.sqrt(maxOdd))
+
+    for (let i = 3; i <= cross; i += 2) {
+        if (sieve[i]) {
+            for (let j = i * i; j <= maxOdd; j += i) {
+                sieve[j] = false
+            }
+        }
+    }
+    return sieve
 }
 
 function gcd (x:number, y:number) : number {
@@ -28,7 +49,6 @@ function gcd (x:number, y:number) : number {
         s = r
         r = rem
     }
-
     return Math.abs(s)
 }
 
@@ -53,6 +73,7 @@ function sumOf (n:number, p=1) : number {
 
 export {
     isPrime,
+    sieveOfEratosthenes,
     gcd,
     lcm,
     sumOf,
