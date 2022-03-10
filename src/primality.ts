@@ -1,7 +1,7 @@
 import { isInt } from './util'
 
 function isPrime (x:number) : boolean {
-    if (!isInt(x)) throw new Error('`x` should be an integer')
+    if (!isInt(x)) throw new Error('input should be an integer')
     if (x <= 3) return x > 1
     if (x % 2 === 0 || x % 3 === 0) return false
 
@@ -13,7 +13,7 @@ function isPrime (x:number) : boolean {
 }
 
 function sieveOfEratosthenes (limit:number) : boolean[] {
-    if (!isInt(limit) || limit < 2) throw new Error('`limit` should be an integer no less than 2')
+    if (!isInt(limit) || limit < 2) throw new Error('expect an integer no less than 2')
 
     const sieve = new Array(limit)
     for (let i = 0; i < limit; i += 2) sieve[i] = false

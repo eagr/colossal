@@ -1,7 +1,7 @@
 import { isInt, isNonNegInt } from './util'
 
 function gcd (x:number, y:number) : number {
-    if (!isInt(x) || !isInt(y)) throw new Error('both numbers should be integers')
+    if (!isInt(x) || !isInt(y)) throw new Error('expect integers')
     if (x === 0 && y === 0) throw new Error('gcd(0, 0) is undefined')
     if (x === 0) return y
     if (y === 0) return x
@@ -19,7 +19,7 @@ function gcd (x:number, y:number) : number {
 }
 
 function lcm (x:number, y:number) : number {
-    if (!isNonNegInt(x) || !isNonNegInt(y)) throw new Error('both numbers should be non-negative integers')
+    if (!isNonNegInt(x) || !isNonNegInt(y)) throw new Error('expect non-negative integers')
     if (x === 0 || y === 0) return 0
     return x * y / gcd(x, y)
 }
