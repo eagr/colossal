@@ -34,7 +34,17 @@ function sieveOfEratosthenes (limit:number) : boolean[] {
     return sieve
 }
 
+function primesUpTo (limit:number) : number[] {
+    const sieve = sieveOfEratosthenes(limit)
+    const primes:number[] = []
+    for (let i = 0; i < limit; i++) {
+        if (sieve[i]) primes.push(i)
+    }
+    return primes
+}
+
 export {
     isPrime,
     sieveOfEratosthenes,
+    primesUpTo,
 }
