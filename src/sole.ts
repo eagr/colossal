@@ -1,6 +1,17 @@
 import { isPosInt } from './util'
 import { primesUpTo } from './primality'
 
+function digitSum (x:number) : number {
+    if (!isPosInt(x)) throw new Error('expect a positive integer')
+
+    let sum = 0
+    while (x > 0) {
+        sum += x % 10
+        x = Math.floor(x / 10)
+    }
+    return sum
+}
+
 function numDivisors (x:number) : number {
     if (!isPosInt(x)) throw new Error('expect a positive integer')
     if (x === 1) return 1
@@ -32,5 +43,6 @@ function numDivisors (x:number) : number {
 }
 
 export {
+    digitSum,
     numDivisors,
 }
