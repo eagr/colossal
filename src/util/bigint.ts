@@ -31,12 +31,29 @@ function min (x:bigint|number, ...xs:(bigint|number)[]) : bigint {
     return BigInt(m)
 }
 
+function sqrt (x:bigint|number) : bigint {
+    if (!isInt(x)) throw new Error('expect an integer')
+
+    const b = BigInt(x)
+    if (b < 0n) throw new Error('sqrt of negative is not supported')
+    if (b < 2n) return b
+
+    function newton (n:bigint, guess:bigint) : bigint {
+        const quot = n / guess
+        if (abs(quot - guess) <= 1) return guess
+        return newton(n, (quot + guess) / 2n)
+    }
+
+    return newton(b, 1n)
+}
+
 const BigMath = {
     abs,
     sign,
     pow,
     max,
     min,
+    sqrt,
 }
 
 export {
