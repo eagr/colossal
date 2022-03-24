@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "lib": ["es2017", "dom"],
-    "target": "es2015",
+    "lib": ["es2020", "dom"],
+    "target": "es2020",
     "module": "commonjs",
     "esModuleInterop": true,
     "importHelpers": true,
