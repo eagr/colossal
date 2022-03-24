@@ -1,4 +1,5 @@
 import { isPosInt } from './util/check'
+import { memoize } from './util/memoize'
 
 /**
  * Calculate the sum of the first `n` positive integers, each to the power of `k`.
@@ -13,6 +14,15 @@ import { isPosInt } from './util/check'
     return n * n * (n + 1) * (n + 1) / 4
 }
 
+const factorial = memoize(
+    function (n:number|bigint) : bigint {
+        const bn = BigInt(n)
+        if (bn <= 1n) return 1n
+        return bn * factorial(bn - 1n)
+    }
+)
+
 export {
+    factorial,
     sumOf,
 }
