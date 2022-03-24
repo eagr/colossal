@@ -1,15 +1,17 @@
-import { isPosInt } from './util/check'
+import { isPosInt, isInt } from './util/check'
+import { BigMath } from './util/bigint'
 import { primesUpTo } from './primality'
 
-function sumDigits (x:number) : number {
-    if (!isPosInt(x)) throw new Error('expect a positive integer')
+function sumDigits (x:number|bigint) : number {
+    if (!isInt(x)) throw new Error('expect an integer')
 
-    let sum = 0
-    while (x > 0) {
-        sum += x % 10
-        x = Math.floor(x / 10)
+    let b = BigMath.abs(x)
+    let s = 0n
+    while (b > 0n) {
+        s += b % 10n
+        b /= 10n
     }
-    return sum
+    return Number(s)
 }
 
 function numDivisors (x:number) : number {
