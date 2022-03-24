@@ -1,4 +1,4 @@
-import { isInt } from './util'
+import { isInt } from './util/check'
 
 function isPrime (x:number) : boolean {
     if (!isInt(x)) throw new Error('input should be an integer')

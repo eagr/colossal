@@ -1,4 +1,4 @@
-import { isPosInt } from './util'
+import { isPosInt } from './util/check'
 import { primesUpTo } from './primality'
 
 function digitSum (x:number) : number {

@@ -1,4 +1,4 @@
-import { isPosInt } from './util'
+import { isPosInt } from './util/check'
 
 /**
  * Calculate the sum of the first `n` positive integers, each to the power of `k`.

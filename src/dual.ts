@@ -1,4 +1,4 @@
-import { isInt, isNonNegInt } from './util'
+import { isInt, isNonNegInt } from './util/check'
 
 function gcd (x:number, y:number) : number {
     if (!isInt(x) || !isInt(y)) throw new Error('expect integers')
