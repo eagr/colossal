@@ -40,7 +40,9 @@ function sqrt (x:bigint|number) : bigint {
 
     function newton (n:bigint, guess:bigint) : bigint {
         const quot = n / guess
-        if (abs(quot - guess) <= 1) return guess
+        if (abs(quot - guess) <= 1) {
+            return quot >= guess ? guess : guess - 1n
+        }
         return newton(n, (quot + guess) / 2n)
     }
 
