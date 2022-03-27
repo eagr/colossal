@@ -1,7 +1,7 @@
 import { isInt } from './util/check'
 
 function isPrime (x:number) : boolean {
-    if (!isInt(x)) throw new Error('input should be an integer')
+    if (!isInt(x)) throw new Error('expect an integer')
     if (x <= 3) return x > 1
     if (x % 2 === 0 || x % 3 === 0) return false
 

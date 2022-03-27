@@ -2,18 +2,6 @@ import { isPosInt, isInt } from './util/check'
 import { BigMath } from './util/bigint'
 import { primesUpTo } from './primality'
 
-function sumDigits (x:number|bigint) : number {
-    if (!isInt(x)) throw new Error('expect an integer')
-
-    let b = BigMath.abs(x)
-    let s = 0n
-    while (b > 0n) {
-        s += b % 10n
-        b /= 10n
-    }
-    return Number(s)
-}
-
 function numDivisors (x:number) : number {
     if (!isPosInt(x)) throw new Error('expect a positive integer')
     if (x === 1) return 1
@@ -44,7 +32,43 @@ function numDivisors (x:number) : number {
     return count
 }
 
+function sumDigits (x:number|bigint) : number {
+    if (!isInt(x)) throw new Error('expect an integer')
+
+    let b = BigMath.abs(x)
+    let s = 0n
+    while (b > 0n) {
+        s += b % 10n
+        b /= 10n
+    }
+    return Number(s)
+}
+
+function maxProperFactor<T extends number|bigint> (x:T) : T {
+    if (!isInt(x)) throw new Error('expect an integer')
+
+    const isNum = typeof x === 'number'
+    let b = BigMath.abs(x)
+    if (b <= 1n) throw new Error('expect abx(x) to be greater than 1')
+
+    let mf = 1n
+    if (b % 2n === 0n) {
+        mf = b / 2n
+    } else {
+        const limit = BigMath.sqrt(b)
+        for (let i = 3n; i <= limit; i += 2n) {
+            if (b % i === 0n) {
+                mf = b / i
+                break
+            }
+        }
+    }
+
+    return (isNum ? Number(mf) : mf) as T
+}
+
 export {
-    sumDigits,
     numDivisors,
+    sumDigits,
+    maxProperFactor,
 }
