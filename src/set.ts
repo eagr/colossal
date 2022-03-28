@@ -1,4 +1,4 @@
-import { isPosInt } from './util/check'
+import { isNonNegInt, isPosInt } from './util/check'
 import { memoize } from './util/memoize'
 
 /**
@@ -14,6 +14,23 @@ import { memoize } from './util/memoize'
     return n * n * (n + 1) * (n + 1) / 4
 }
 
+const fibonacci = (function () {
+    const fib = memoize(
+        function (n:number) : [number, number] {
+            if (n === 0) return [0, 1]
+            const p = fib(n >> 1)
+            const fst = p[0] * (2 * p[1] - p[0])
+            const snd = p[0] * p[0] + p[1] * p[1]
+            return n & 1 ? [snd, fst + snd] : [fst, snd]
+        }
+    )
+
+    return function (n:number) : number {
+        if (!isNonNegInt(n)) throw new Error('expect a non-negative integer')
+        return fib(n)[0]
+    }
+})()
+
 const factorial = memoize(
     function (n:number|bigint) : bigint {
         const bn = BigInt(n)
@@ -23,6 +40,7 @@ const factorial = memoize(
 )
 
 export {
-    factorial,
     sumOf,
+    fibonacci,
+    factorial,
 }
