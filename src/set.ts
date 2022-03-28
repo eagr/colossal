@@ -5,10 +5,10 @@ const fibonacci = (function () {
     const fib = memoize(
         function (n:number) : [number, number] {
             if (n === 0) return [0, 1]
-            const p = fib(n >> 1)
+            const p = fib(Math.floor(n / 2))
             const fst = p[0] * (2 * p[1] - p[0])
             const snd = p[0] * p[0] + p[1] * p[1]
-            return n & 1 ? [snd, fst + snd] : [fst, snd]
+            return n % 2 === 1 ? [snd, fst + snd] : [fst, snd]
         }
     )
 
