@@ -24,7 +24,7 @@ function isInt (x:any) : boolean {
     if (isBigInt(x)) return true
     return typeof x === 'number'
         && !isNaN(x)
-        && (x | 0) === x
+        && Math.floor(x) === x
 }
 
 function isNonNegInt (x:any) : boolean {
