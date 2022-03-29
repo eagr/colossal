@@ -35,6 +35,10 @@ function isPosInt (x:any) : boolean {
     return isPosBigInt(x) || (isInt(x) && x > 0)
 }
 
+function isZero (x:any) : boolean {
+    return x === 0 || x === 0n
+}
+
 export {
     isInt,
     isNonNegInt,
@@ -43,4 +47,6 @@ export {
     isBigInt,
     isNonNegBigInt,
     isPosBigInt,
+
+    isZero,
 }
