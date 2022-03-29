@@ -1,4 +1,4 @@
-import { isInt } from './check'
+import { isInt, isZero } from './check'
 import { BigMath } from './bigint'
 
 type Num = number | bigint
@@ -17,12 +17,12 @@ function powMod (b:number, p:number, m:number) : number {
 function gcd<T extends Num> (x:T, y:T) : T {
     if (!isInt(x) || !isInt(y)) throw new Error('expect integers')
 
-    const isNumber = typeof x === 'number' && typeof y === 'number'
+    const areNumbers = typeof x === 'number' && typeof y === 'number'
     const bx = BigMath.abs(x)
     const by = BigMath.abs(y)
     if (bx === 0n && by === 0n) throw new Error('gcd(0, 0) is undefined')
-    if (bx === 0n) return (isNumber ? Number(by) : by) as T
-    if (by === 0n) return (isNumber ? Number(bx) : bx) as T
+    if (bx === 0n) return (areNumbers ? Number(by) : by) as T
+    if (by === 0n) return (areNumbers ? Number(bx) : bx) as T
 
     let l = BigMath.max(bx, by)
     let s = BigMath.min(bx, by)
@@ -33,10 +33,21 @@ function gcd<T extends Num> (x:T, y:T) : T {
         s = r
         r = rem
     }
-    return (isNumber ? Number(s) : s) as T
+    return (areNumbers ? Number(s) : s) as T
+}
+
+function lcm<T extends Num> (x:T, y:T) : T {
+    const areNumbers = typeof x === 'number' && typeof y === 'number'
+    if (isZero(x) && isZero(y)) return (areNumbers ? 0 : 0n) as T
+
+    const bx = BigMath.abs(x)
+    const by = BigMath.abs(y)
+    const m = bx * by / gcd(bx, by)
+    return (areNumbers ? Number(m) : m) as T
 }
 
 export {
     powMod,
     gcd,
+    lcm,
 }
