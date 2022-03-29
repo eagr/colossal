@@ -1,6 +1,6 @@
 import { isPosInt, isInt } from './util/check'
 import { BigMath } from './util/bigint'
-import { primesUpTo } from './primality'
+import { primes } from './primality'
 
 type Num = number | bigint
 
@@ -8,14 +8,14 @@ function numDivisors (x:number) : number {
     if (!isPosInt(x)) throw new Error('expect a positive integer')
     if (x === 1) return 1
 
-    const primes = primesUpTo(Math.floor(Math.sqrt(x)) + 1)
+    const ps = primes(Math.floor(Math.sqrt(x)) + 1)
 
     let count = 1
     let div = x
     let prev = div
     while (div > 1) {
-        for (let i = 0; i < primes.length; i++) {
-            const p = primes[i]
+        for (let i = 0; i < ps.length; i++) {
+            const p = ps[i]
             if (div < p * p) break
 
             let e = 1
