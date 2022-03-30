@@ -1,21 +1,29 @@
-import { isInt } from './check'
+/**
+ * Each function in the module takes integers as input, either `number` or `bigint`,
+ * and always returns a `bigint`.
+ */
 
-function abs (x:bigint|number) : bigint {
-    if (!isInt(x)) throw new Error('expect an integer')
+import { assertInt, assertNonNegInt, assertRange } from './check'
+
+type Num = number | bigint
+
+function abs (x:Num) : bigint {
+    assertInt(x)
     return BigInt(x < 0 ? -x : x)
 }
 
-function sign (x:bigint|number) : bigint {
-    if (!isInt(x)) throw new Error('expect an integer')
+function sign (x:Num) : bigint {
+    assertInt(x)
     return x > 0n ? 1n : (x < 0n ? -1n : 0n)
 }
 
-function pow (b:bigint|number, e:bigint|number) : bigint {
-    if (!isInt(b) || !isInt(e)) throw new Error('expect integers')
+function pow (b:Num, e:Num) : bigint {
+    assertNonNegInt(e, 'Exponent must not be negative')
+    assertInt(b, 'Expect integers')
     return BigInt(b) ** BigInt(e)
 }
 
-function max (x:bigint|number, ...xs:(bigint|number)[]) : bigint {
+function max (x:Num, ...xs:(Num)[]) : bigint {
     let m = x
     for (let i = 0; i < xs.length; i++) {
         if (xs[i] > m) m = xs[i]
@@ -23,7 +31,7 @@ function max (x:bigint|number, ...xs:(bigint|number)[]) : bigint {
     return BigInt(m)
 }
 
-function min (x:bigint|number, ...xs:(bigint|number)[]) : bigint {
+function min (x:Num, ...xs:(Num)[]) : bigint {
     let m = x
     for (let i = 0; i < xs.length; i++) {
         if (xs[i] < m) m = xs[i]
@@ -31,11 +39,9 @@ function min (x:bigint|number, ...xs:(bigint|number)[]) : bigint {
     return BigInt(m)
 }
 
-function sqrt (x:bigint|number) : bigint {
-    if (!isInt(x)) throw new Error('expect an integer')
-
+function sqrt (x:Num) : bigint {
     const b = BigInt(x)
-    if (b < 0n) throw new Error('sqrt of negative is not supported')
+    assertRange(b >= 0n, 'sqrt of negative is not supported')
     if (b < 2n) return b
 
     function newton (n:bigint, guess:bigint) : bigint {

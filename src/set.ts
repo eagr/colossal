@@ -1,8 +1,8 @@
-import { isNonNegInt, isPosInt } from './util/check'
+import { assertPosInt, assertNonNegInt, assertRange } from './util/check'
 import { memoize } from './util/memoize'
 
 function triangular (n:number) : number {
-    if (!isPosInt(n)) throw new Error('expect a positive integer')
+    assertPosInt(n)
     return (1 + n) * n / 2
 }
 
@@ -18,27 +18,34 @@ const fibonacci = (function () {
     )
 
     return function (n:number) : number {
-        if (!isNonNegInt(n)) throw new Error('expect a non-negative integer')
+        assertNonNegInt(n)
         return fib(n)[0]
     }
 })()
 
-const factorial = memoize(
-    function (n:number|bigint) : bigint {
-        const bn = BigInt(n)
-        if (bn <= 1n) return 1n
-        return bn * factorial(bn - 1n)
+const factorial = (function () {
+    const f = memoize(
+        function (n:number|bigint) : bigint {
+            const bn = BigInt(n)
+            if (bn <= 1n) return 1n
+            return bn * f(bn - 1n)
+        }
+    )
+
+    return function (n:number|bigint) : bigint {
+        assertNonNegInt(n)
+        return f(n)
     }
-)
+})
 
 /**
- * Calculate the sum of the first `n` positive integers, each to the power of `k`.
- * @param {number} n - the first `n` positive integers
+ * Calculate the sum of the first `n` positive integers, each to the power of `p`.
+ * @param {number} n - the first n positive integers
  * @param {number} p - power of the integers, can be either 1, 2, or 3
  */
  function sumOf (n:number, p=1) : number {
-    if (!isPosInt(n)) throw new Error('expect first arg to be a positive integer')
-    if (p !== 1 && p !== 2 && p !== 3) throw new Error('expect second arg to be either 1, 2, or 3')
+    assertRange(p === 1 || p === 2 || p === 3, 'Expect exponent to be either 1, 2, or 3')
+    assertPosInt(n, 'Expect `n` to be a positive integer')
     if (p === 1) return n * (1 + n) / 2
     if (p === 2) return n * (n + 1) * (2 * n + 1) / 6
     return n * n * (n + 1) * (n + 1) / 4

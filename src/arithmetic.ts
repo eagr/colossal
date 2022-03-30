@@ -15,12 +15,12 @@ function powMod (b:number, p:number, m:number) : number {
 }
 
 function gcd<T extends Num> (x:T, y:T) : T {
-    if (!isInt(x) || !isInt(y)) throw new Error('expect integers')
+    if (!isInt(x) || !isInt(y)) throw new RangeError('Expect integers')
 
     const areNumbers = typeof x === 'number' && typeof y === 'number'
     let bx = BigMath.abs(x)
     let by = BigMath.abs(y)
-    if (bx === 0n && by === 0n) throw new Error('gcd(0, 0) is undefined')
+    if (bx === 0n && by === 0n) throw new RangeError('GCD(0, 0) is undefined')
 
     while (true) {
         if (bx === 0n) return (areNumbers ? Number(by) : by) as T

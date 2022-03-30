@@ -1,11 +1,11 @@
-import { isPosInt, isInt } from './util/check'
+import { assertInt, assertPosInt } from './util/check'
 import { BigMath } from './util/bigint'
 import { primes } from './primality'
 
 type Num = number | bigint
 
 function numDivisors (x:number) : number {
-    if (!isPosInt(x)) throw new Error('expect a positive integer')
+    assertPosInt(x)
     if (x === 1) return 1
 
     const ps = primes(Math.floor(Math.sqrt(x)) + 1)
@@ -35,7 +35,7 @@ function numDivisors (x:number) : number {
 }
 
 function sumDigits (x:Num) : number {
-    if (!isInt(x)) throw new Error('expect an integer')
+    assertInt(x)
 
     let b = BigMath.abs(x)
     let s = 0n
@@ -47,7 +47,7 @@ function sumDigits (x:Num) : number {
 }
 
 function maxProperFactor<T extends Num> (x:T) : T {
-    if (!isInt(x)) throw new Error('expect an integer')
+    assertInt(x)
 
     const isNumber = typeof x === 'number'
     const b = BigMath.abs(x)
@@ -70,7 +70,7 @@ function maxProperFactor<T extends Num> (x:T) : T {
 }
 
 function maxPrimeFactor<T extends Num> (x:T) : T {
-    if (!isInt(x)) throw new Error('expect an integer')
+    assertInt(x)
 
     const isNumber = typeof x === 'number'
     const b = BigMath.abs(x)
