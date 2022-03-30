@@ -1,6 +1,11 @@
 import { isNonNegInt, isPosInt } from './util/check'
 import { memoize } from './util/memoize'
 
+function triangular (n:number) : number {
+    if (!isPosInt(n)) throw new Error('expect a positive integer')
+    return (1 + n) * n / 2
+}
+
 const fibonacci = (function () {
     const fib = memoize(
         function (n:number) : [number, number] {
@@ -54,6 +59,7 @@ function sumFibonacci (n:number) : number {
 }
 
 export {
+    triangular,
     fibonacci,
     factorial,
     sumOf,
