@@ -13,29 +13,27 @@ function isPrime (x:number) : boolean {
     return true
 }
 
-const sieveOfEratosthenes = memoize(
-    function (limit:number) : boolean[] {
-        if (!isInt(limit) || limit < 2) throw new Error('expect an integer no less than 2')
+function sieveOfEratosthenes (limit:number) : boolean[] {
+    if (!isInt(limit) || limit < 2) throw new Error('expect an integer no less than 2')
 
-        const sieve = new Array(limit)
-        for (let i = 0; i < limit; i += 2) sieve[i] = false
-        if (limit > 1) sieve[1] = false
-        if (limit > 2) sieve[2] = true
-        for (let i = 3; i < limit; i += 2) sieve[i] = true
+    const sieve = new Array(limit)
+    for (let i = 0; i < limit; i += 2) sieve[i] = false
+    if (limit > 1) sieve[1] = false
+    if (limit > 2) sieve[2] = true
+    for (let i = 3; i < limit; i += 2) sieve[i] = true
 
-        const maxOdd = limit - 1 - (limit % 2)
-        const cross = Math.floor(Math.sqrt(maxOdd))
+    const maxOdd = limit - 1 - (limit % 2)
+    const cross = Math.floor(Math.sqrt(maxOdd))
 
-        for (let i = 3; i <= cross; i += 2) {
-            if (sieve[i]) {
-                for (let j = i * i; j <= maxOdd; j += i) {
-                    sieve[j] = false
-                }
+    for (let i = 3; i <= cross; i += 2) {
+        if (sieve[i]) {
+            for (let j = i * i; j <= maxOdd; j += i) {
+                sieve[j] = false
             }
         }
-        return sieve
     }
-)
+    return sieve
+}
 
 function primes (limit:number) : number[] {
     const sieve = sieveOfEratosthenes(limit)
