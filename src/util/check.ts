@@ -1,7 +1,4 @@
-const supportsBigInt = typeof BigInt === 'function' && typeof BigInt(0) === 'bigint'
-
 function isBigInt (x:any) : boolean {
-    if (!supportsBigInt) return false
     if (typeof x === 'bigint') return true
     try {
         BigInt.prototype.valueOf.call(x)
@@ -39,7 +36,6 @@ function isZero (x:any) : boolean {
 }
 
 export {
-    supportsBigInt,
     isBigInt,
     isNonNegBigInt,
     isPosBigInt,
