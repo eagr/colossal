@@ -1,15 +1,14 @@
-function isBigInt (x:any) : boolean {
-    if (typeof BigInt !== 'function') return false
-    if (typeof x === 'bigint') return true
+const supportsBigInt = typeof BigInt === 'function' && typeof BigInt(0) === 'bigint'
 
-    return (function () {
-        try {
-            BigInt.prototype.valueOf.call(x)
-            return true
-        } catch (_) {
-            return false
-        }
-    })()
+function isBigInt (x:any) : boolean {
+    if (!supportsBigInt) return false
+    if (typeof x === 'bigint') return true
+    try {
+        BigInt.prototype.valueOf.call(x)
+        return true
+    } catch {
+        return false
+    }
 }
 
 function isNonNegBigInt (x:any) : boolean {
@@ -40,13 +39,14 @@ function isZero (x:any) : boolean {
 }
 
 export {
-    isInt,
-    isNonNegInt,
-    isPosInt,
-
+    supportsBigInt,
     isBigInt,
     isNonNegBigInt,
     isPosBigInt,
+
+    isInt,
+    isNonNegInt,
+    isPosInt,
 
     isZero,
 }
