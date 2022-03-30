@@ -1,4 +1,6 @@
-# nth
+# colossal
+
+bigint arithmetic toolkit
 
 ## License
 

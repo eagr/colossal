@@ -1,12 +1,12 @@
 {
-  "name": "nth",
+  "name": "colossal",
   "version": "0.0.0",
-  "description": "number theory lib",
+  "description": "bigint arithmetic toolkit",
   "main": "index.js",
   "scripts": {},
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/eagr/nth.git"
+    "url": "git+https://github.com/eagr/colossal.git"
   },
   "keywords": [
     "math",
@@ -16,9 +16,9 @@
   "author": "Julian Eager",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/eagr/nth/issues"
+    "url": "https://github.com/eagr/colossal/issues"
   },
-  "homepage": "https://github.com/eagr/nth#readme",
+  "homepage": "https://github.com/eagr/colossal#readme",
   "devDependencies": {
     "tslib": "^2.3.1",
     "typescript": "^4.6.2",
