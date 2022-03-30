@@ -1,1 +1,1 @@
-export { gcd, lcm } from './util/arithmetic'
+export { gcd, lcm } from './arithmetic'

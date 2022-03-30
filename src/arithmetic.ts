@@ -1,5 +1,5 @@
-import { isInt, isZero } from './check'
-import { BigMath } from './bigint'
+import { isInt, isZero } from './util/check'
+import { BigMath } from './util/bigint'
 
 type Num = number | bigint
 
