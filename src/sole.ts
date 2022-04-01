@@ -1,25 +1,26 @@
-import { assertInt, assertPosInt } from './util/check'
+import type { Num } from './interface'
+import { assertInt, assertPosInt, assertRange } from './util/check'
 import { BigMath } from './util/bigint'
+import { box } from './util/box'
 import { primes } from './primality'
 
-type Num = number | bigint
-
-function numDivisors (x:number) : number {
+const numDivisors = box(function (x:Num) : bigint {
     assertPosInt(x)
-    if (x === 1) return 1
 
-    const ps = primes(Math.floor(Math.sqrt(x)) + 1)
+    const bx = BigInt(x)
+    if (bx === 1n) return 1n
 
-    let count = 1
-    let div = x
+    const ps = primes(BigMath.sqrt(bx) + 1n)
+    let count = 1n
+    let div = bx
     let prev = div
-    while (div > 1) {
+    while (div > 1n) {
         for (let i = 0; i < ps.length; i++) {
             const p = ps[i]
             if (div < p * p) break
 
-            let e = 1
-            while (div % p === 0) {
+            let e = 1n
+            while (div % p === 0n) {
                 div /= p
                 e++
             }
@@ -30,11 +31,11 @@ function numDivisors (x:number) : number {
         prev = div
     }
 
-    if (div > 1) count *= 2
+    if (div > 1n) count *= 2n
     return count
-}
+})
 
-function sumDigits (x:Num) : number {
+const sumDigits = box(function (x:Num) : bigint {
     assertInt(x)
 
     let b = BigMath.abs(x)
@@ -43,15 +44,14 @@ function sumDigits (x:Num) : number {
         s += b % 10n
         b /= 10n
     }
-    return Number(s)
-}
+    return s
+})
 
-function maxProperFactor<T extends Num> (x:T) : T {
+const maxProperFactor = box(function (x:Num) : bigint {
     assertInt(x)
 
-    const isNumber = typeof x === 'number'
     const b = BigMath.abs(x)
-    if (b <= 1n) throw new Error('expect abx(x) to be greater than 1')
+    assertRange(b <= 1n, 'Expect abx(x) to be greater than 1')
 
     let mf = 1n
     if (b % 2n === 0n) {
@@ -65,16 +65,14 @@ function maxProperFactor<T extends Num> (x:T) : T {
             }
         }
     }
+    return mf
+})
 
-    return (isNumber ? Number(mf) : mf) as T
-}
-
-function maxPrimeFactor<T extends Num> (x:T) : T {
+const maxPrimeFactor = box(function (x:Num) : bigint {
     assertInt(x)
 
-    const isNumber = typeof x === 'number'
     const b = BigMath.abs(x)
-    if (b <= 1n) throw new Error('expect abx(x) to be greater than 1')
+    assertRange(b <= 1n, 'Expect abx(x) to be greater than 1')
 
     let mf = b
 
@@ -95,8 +93,8 @@ function maxPrimeFactor<T extends Num> (x:T) : T {
         }
     }
 
-    return (isNumber ? Number(mf) : mf) as T
-}
+    return mf
+})
 
 export {
     numDivisors,

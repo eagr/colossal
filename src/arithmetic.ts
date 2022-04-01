@@ -1,16 +1,32 @@
-import type { Num, IfAnyBigint } from './interface'
-import { isInt, isPosInt, isZero } from './util/check'
+import type { Num } from './interface'
+import { box } from './util/box'
 import { BigMath } from './util/bigint'
+import { isInt, isPosInt, isZero } from './util/check'
 
-function powMod <
-    B extends Num,
-    P extends Num,
-    M extends Num,
-    R extends IfAnyBigint<[B, P, M]>,
-> (b:B, p:P, m:M) : R {
+const gcd = box(function (x:Num, y:Num) : bigint {
+    if (isZero(x) && isZero(y)) throw new Error('GCD(0, 0) is undefined')
+    if (!isInt(x) || !isInt(y)) throw new RangeError('Expect integers')
+
+    let bx = BigMath.abs(x)
+    let by = BigMath.abs(y)
+    while (true) {
+        if (bx === 0n) return by
+        by %= bx
+        if (by === 0n) return bx
+        bx %= by
+    }
+})
+
+const lcm = box(function (x:Num, y:Num) : bigint {
+    if (isZero(x) && isZero(y)) return 0n
+    const bx = BigMath.abs(x)
+    const by = BigMath.abs(y)
+    return bx * by / gcd(bx, by)
+})
+
+const powMod = box(function (b:Num, p:Num, m:Num) : bigint {
     if (!isPosInt(b) || !isPosInt(p) || !isPosInt(m)) throw new RangeError('Expect positive integers')
 
-    const areNums = typeof b === 'number' && typeof p === 'number' && typeof m === 'number'
     let bb = BigInt(b)
     let bp = BigInt(p)
     let bm = BigInt(m)
@@ -22,45 +38,11 @@ function powMod <
         bb = bb * bb % bm
         bp = bp / 2n
     }
-    return (areNums ? Number(res) : res) as R
-}
-
-function gcd <
-    X extends Num,
-    Y extends Num,
-    R extends IfAnyBigint<[X, Y]>,
-> (x:X, y:Y) : R {
-    if (!isInt(x) || !isInt(y)) throw new RangeError('Expect integers')
-
-    const areNums = typeof x === 'number' && typeof y === 'number'
-    let bx = BigMath.abs(x)
-    let by = BigMath.abs(y)
-    if (bx === 0n && by === 0n) throw new RangeError('GCD(0, 0) is undefined')
-
-    while (true) {
-        if (bx === 0n) return (areNums ? Number(by) : by) as R
-        by %= bx
-        if (by === 0n) return (areNums ? Number(bx) : bx) as R
-        bx %= by
-    }
-}
-
-function lcm <
-    X extends Num,
-    Y extends Num,
-    R extends IfAnyBigint<[X, Y]>,
-> (x:X, y:Y) : R {
-    const areNums = typeof x === 'number' && typeof y === 'number'
-    if (isZero(x) && isZero(y)) return (areNums ? 0 : 0n) as R
-
-    const bx = BigMath.abs(x)
-    const by = BigMath.abs(y)
-    const m = bx * by / gcd(bx, by)
-    return (areNums ? Number(m) : m) as R
-}
+    return res
+})
 
 export {
-    powMod,
     gcd,
     lcm,
+    powMod,
 }

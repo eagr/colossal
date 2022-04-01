@@ -1,6 +1,6 @@
 # colossal
 
-bigint arithmetic toolkit
+bigint-friendly arithmetic toolkit
 
 ## License
 

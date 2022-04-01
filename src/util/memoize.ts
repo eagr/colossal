@@ -3,7 +3,7 @@ function stringify (x:any) {
     return JSON.stringify(x, (_, v) => typeof v === 'bigint' ? v.toString() : v)
 }
 
-function memoize<F extends unknown>(f:F) : F {
+export function memoize<F extends unknown>(f:F) : F {
     if (typeof f !== 'function') throw new TypeError('Expect a function')
 
     const cache = new Map()
@@ -16,8 +16,4 @@ function memoize<F extends unknown>(f:F) : F {
         return res
     } as F
     return memoized
-}
-
-export {
-    memoize,
 }
