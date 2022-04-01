@@ -1,27 +1,32 @@
-import { assertInt, assertRange, isInt } from './util/check'
+import type { Num } from './interface'
+import { assertInt, assertRange, isInt, isBigint } from './util/check'
+import { BigMath } from './util/bigint'
 
-function isPrime (x:number) : boolean {
+function isPrime (x:Num) : boolean {
     assertInt(x)
-    if (x <= 3) return x > 1
-    if (x % 2 === 0 || x % 3 === 0) return false
 
-    const hi = Math.floor(Math.sqrt(x))
-    for (let i = 5; i <= hi; i += 6) {
-        if (x % i === 0 || x % (i + 2) === 0) return false
+    const bx = BigInt(x)
+    if (bx <= 3n) return bx > 1n
+    if (bx % 2n === 0n || bx % 3n === 0n) return false
+
+    const hi = BigMath.sqrt(bx)
+    for (let i = 5n; i <= hi; i += 6n) {
+        if (bx % i === 0n || bx % (i + 2n) === 0n) return false
     }
     return true
 }
 
-function sieveOfEratosthenes (limit:number) : boolean[] {
+function sieveOfEratosthenes (limit:Num) : boolean[] {
     assertRange(isInt(limit) && limit >= 2, 'Expect an integer greater than 1')
 
-    const sieve = new Array(limit)
-    for (let i = 0; i < limit; i += 2) sieve[i] = false
-    if (limit > 1) sieve[1] = false
-    if (limit > 2) sieve[2] = true
-    for (let i = 3; i < limit; i += 2) sieve[i] = true
+    const l = Number(limit)
+    const sieve = new Array(l)
+    for (let i = 0; i < l; i += 2) sieve[i] = false
+    if (l > 1) sieve[1] = false
+    if (l > 2) sieve[2] = true
+    for (let i = 3; i < l; i += 2) sieve[i] = true
 
-    const maxOdd = limit - 1 - (limit % 2)
+    const maxOdd = l - 1 - (l % 2)
     const cross = Math.floor(Math.sqrt(maxOdd))
 
     for (let i = 3; i <= cross; i += 2) {
@@ -34,13 +39,17 @@ function sieveOfEratosthenes (limit:number) : boolean[] {
     return sieve
 }
 
-function primes (limit:number) : number[] {
+function primes <
+    T extends Num,
+    R extends T extends number ? number[] : bigint[],
+> (limit:T) {
     const sieve = sieveOfEratosthenes(limit)
-    const ps:number[] = []
-    for (let i = 0; i < limit; i++) {
-        if (sieve[i]) ps.push(i)
+    const ps:Num[] = []
+    let j = (isBigint(limit) ? 0n : 0) as T
+    for (let i = 0; i < limit; i++, j++) {
+        if (sieve[i]) ps.push(j)
     }
-    return ps
+    return ps as R
 }
 
 export {
