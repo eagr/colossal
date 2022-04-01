@@ -1,4 +1,4 @@
-function isBigInt (x:any) : boolean {
+function isBigint (x:any) : boolean {
     if (typeof x === 'bigint') return true
     try {
         BigInt.prototype.valueOf.call(x)
@@ -8,27 +8,27 @@ function isBigInt (x:any) : boolean {
     }
 }
 
-function isNonNegBigInt (x:any) : boolean {
-    return isBigInt(x) && x >= 0n
+function isNonNegBigint (x:any) : boolean {
+    return isBigint(x) && x >= 0n
 }
 
-function isPosBigInt (x:any) : boolean {
-    return isBigInt(x) && x > 0n
+function isPosBigint (x:any) : boolean {
+    return isBigint(x) && x > 0n
 }
 
 function isInt (x:any) : boolean {
-    if (isBigInt(x)) return true
+    if (isBigint(x)) return true
     return typeof x === 'number'
         && !isNaN(x)
         && Math.floor(x) === x
 }
 
 function isNonNegInt (x:any) : boolean {
-    return isNonNegBigInt(x) || (isInt(x) && x >= 0)
+    return isNonNegBigint(x) || (isInt(x) && x >= 0)
 }
 
 function isPosInt (x:any) : boolean {
-    return isPosBigInt(x) || (isInt(x) && x > 0)
+    return isPosBigint(x) || (isInt(x) && x > 0)
 }
 
 function assertRange (pred:boolean, msg:string) {
@@ -56,9 +56,9 @@ function isZero (x:any) : boolean {
 }
 
 export {
-    isBigInt,
-    isNonNegBigInt,
-    isPosBigInt,
+    isBigint,
+    isNonNegBigint,
+    isPosBigint,
     isInt,
     isNonNegInt,
     isPosInt,
