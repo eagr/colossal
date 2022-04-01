@@ -13,7 +13,7 @@ function isNonNegBigInt (x:any) : boolean {
 }
 
 function isPosBigInt (x:any) : boolean {
-    return isPosBigInt(x) && x > 0n
+    return isBigInt(x) && x > 0n
 }
 
 function isInt (x:any) : boolean {
