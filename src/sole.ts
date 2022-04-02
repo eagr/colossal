@@ -1,5 +1,5 @@
 import type { Num } from './interface'
-import { assertInt, assertPosInt, assertRange } from './util/check'
+import { assertInt, assertNonNegInt, assertPosInt, assertRange } from './util/check'
 import { BigMath } from './util/bigint'
 import { box } from './util/box'
 import { primes } from './primality'
