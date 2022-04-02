@@ -3,9 +3,8 @@
  * and always returns a `bigint`.
  */
 
+import type { Num } from '../interface'
 import { assertInt, assertNonNegInt, assertRange } from './check'
-
-type Num = number | bigint
 
 function abs (x:Num) : bigint {
     assertInt(x)
