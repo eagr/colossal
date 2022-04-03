@@ -1,10 +1,10 @@
 import type { Num } from './interface'
-import { assertInt, assertNonNegInt, assertPosInt, assertRange } from './util/check'
+import { assertInt, assertPosInt, assertRange } from './util/check'
 import { BigMath } from './util/bigint'
 import { box } from './util/box'
 import { primes } from './primality'
 
-const numDivisors = box(function (x:Num) : bigint {
+const numFactors = box(function (x:Num) : bigint {
     assertPosInt(x)
 
     const bx = BigInt(x)
@@ -97,7 +97,7 @@ const maxPrimeFactor = box(function (x:Num) : bigint {
 })
 
 export {
-    numDivisors,
+    numFactors,
     sumDigits,
     maxProperFactor,
     maxPrimeFactor,
