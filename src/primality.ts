@@ -41,17 +41,14 @@ function sieveOfEratosthenes (limit:Num) : boolean[] {
     return _sieve.slice(0)
 }
 
-function primes <
-    T extends Num,
-    R extends T extends number ? number[] : bigint[],
-> (limit:T) {
+function primes <N extends Num> (limit:N) {
     const sieve = sieveOfEratosthenes(limit)
     const ps:Num[] = []
-    let j = (isBigint(limit) ? 0n : 0) as T
+    let j = isBigint(limit) ? 0n : 0
     for (let i = 0; i < limit; i++, j++) {
         if (sieve[i]) ps.push(j)
     }
-    return ps as R
+    return ps as N extends number ? number[] : bigint[]
 }
 
 export {
