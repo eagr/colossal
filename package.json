@@ -1,17 +1,23 @@
 {
   "name": "colossal",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "bigint-friendly arithmetic toolkit",
-  "main": "index.js",
-  "scripts": {},
+  "files": ["dist"],
+  "main": "dist/index.js",
+  "scripts": {
+    "clean": "rm -rf dist",
+    "build": "tsc",
+    "prepare": "npm run clean && npm run build"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/eagr/colossal.git"
   },
   "keywords": [
     "math",
-    "number",
-    "theory"
+    "number theory",
+    "arithmetic",
+    "bigint"
   ],
   "author": "Julian Eager",
   "license": "MIT",
