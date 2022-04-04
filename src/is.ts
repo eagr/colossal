@@ -1,6 +1,7 @@
 import type { Num } from './interface'
 import { assertNonNegInt } from './util/check'
 import { BigMath } from './util/bigint'
+import { isPrime } from './_'
 
 function isSquare (n:Num) : boolean {
     assertNonNegInt(n)
@@ -9,5 +10,6 @@ function isSquare (n:Num) : boolean {
 }
 
 export {
+    isPrime,
     isSquare,
 }

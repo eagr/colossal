@@ -2,7 +2,7 @@ import type { Num } from './interface'
 import { assertInt, assertPosInt, assertRange, isBigint } from './util/check'
 import { BigMath } from './util/bigint'
 import { box } from './util/box'
-import { primes } from './primality'
+import { primes } from './_'
 
 function factors <N extends Num> (n:N) {
     assertPosInt(n)
