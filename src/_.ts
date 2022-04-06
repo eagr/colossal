@@ -1,9 +1,9 @@
 import type { Num } from './interface'
-import { assertInt, assertRange, isInt, isBigint } from './util/check'
+import { assertRange, isInt, isBigint, isZero } from './util/check'
 import { BigMath } from './util/bigint'
 
 function isPrime (x:Num) : boolean {
-    assertInt(x)
+    if (!isInt(x)) return false
 
     const bx = BigInt(x)
     if (bx <= 3n) return bx > 1n
@@ -53,8 +53,36 @@ function primes <N extends Num> (limit:N) {
     return ps as N extends number ? number[] : bigint[]
 }
 
+function factors <N extends Num> (n:N) {
+    assertRange(!isZero(n), 'Expect non-zero integers')
+
+    const big = isBigint(n)
+    const fs = new Set([big ? 1n : 1])
+
+    const bn = BigMath.abs(n)
+    let div = bn
+    const ps = primes(BigMath.sqrt(bn) + 1n)
+
+    for (let i = 0; i < ps.length && div > ps[i]; i++) {
+        const p = ps[i]
+        let f = 1n
+        while (div % p === 0n) {
+            div /= p
+            f *= p
+            big ? fs.add(f).add(bn / f) : fs.add(Number(f)).add(Number(bn / f))
+        }
+    }
+    if (div > 1n) fs.add(big ? div : Number(div))
+    if (div !== bn) fs.add(big ? bn : Number(bn))
+
+    return (
+        Array.from(fs).sort((a:any, b:any) => Number(a - b))
+    ) as N extends number ? number[] : bigint[]
+}
+
 export {
     isPrime,
     sieve,
     primes,
+    factors,
 }

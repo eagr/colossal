@@ -1,34 +1,8 @@
 import type { Num } from './interface'
-import { assertInt, assertPosInt, assertRange, isBigint } from './util/check'
+import { assertInt, assertPosInt, assertRange } from './util/check'
 import { BigMath } from './util/bigint'
 import { box } from './util/box'
-import { primes } from './_'
-
-function factors <N extends Num> (n:N) {
-    assertPosInt(n)
-
-    const big = isBigint(n)
-    const fs = new Set([big ? 1n : 1])
-
-    const bn = BigMath.abs(n)
-    let div = bn
-    const ps = primes(BigMath.sqrt(bn) + 1n)
-
-    for (let i = 0; i < ps.length && div > ps[i]; i++) {
-        const p = ps[i]
-        let f = 1n
-        while (div % p === 0n) {
-            div /= p
-            f *= p
-            big ? fs.add(f).add(bn / f) : fs.add(Number(f)).add(Number(bn / f))
-        }
-    }
-    if (div > 1n) fs.add(big ? div : Number(div))
-
-    return (
-        Array.from(fs).sort((a:any, b:any) => Number(a - b))
-    ) as N extends number ? number[] : bigint[]
-}
+import { primes, factors } from './_'
 
 const numFactors = box(function (x:Num) : bigint {
     assertPosInt(x)
