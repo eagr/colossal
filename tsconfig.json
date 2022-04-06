@@ -17,6 +17,7 @@
 
     "downlevelIteration": true,
     "removeComments": true,
+    "declaration": true,
     "sourceMap": true,
     "outDir": "dist",
   },
