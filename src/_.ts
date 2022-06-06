@@ -22,9 +22,7 @@ function sieveOfEratosthenes (limit:Num) : boolean[] {
     const l = Number(limit)
     if (l < _sieve.length) return _sieve.slice(0, Number(l))
 
-    _sieve = new Array(l)
-    for (let i = 0; i < l; i += 2) _sieve[i] = false
-    if (l > 1) _sieve[1] = false
+    _sieve = new Array(l).fill(false)
     if (l > 2) _sieve[2] = true
     for (let i = 3; i < l; i += 2) _sieve[i] = true
 
@@ -33,7 +31,7 @@ function sieveOfEratosthenes (limit:Num) : boolean[] {
 
     for (let i = 3; i <= cross; i += 2) {
         if (_sieve[i]) {
-            for (let j = i * i; j <= maxOdd; j += i) {
+            for (let j = i * i; j <= maxOdd; j += 2 * i) {
                 _sieve[j] = false
             }
         }
