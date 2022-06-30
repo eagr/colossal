@@ -4,10 +4,9 @@ import { isBigint } from './check'
 type Args<F> = F extends (...args:infer A) => any ? A : never
 
 /**
- * Box a function so that the boxed version only returns bigint if there is at least one bigint
- * in the arguments.
+ * Boxed function returns bigint if any bigint in args.
  */
-export function box <F extends (...xs:Num[]) => bigint> (f:F) {
+export function box <F extends (...xs:Num[]) => Num> (f:F) {
     return function <A extends Args<F>> (...xs:A) {
         const r = f(...xs)
 
@@ -18,6 +17,6 @@ export function box <F extends (...xs:Num[]) => bigint> (f:F) {
                 break
             }
         }
-        return (hasBigint ? r : Number(r)) as IfAnyBigint<A>
+        return (hasBigint ? BigInt(r) : Number(r)) as IfAnyBigint<A>
     }
 }
