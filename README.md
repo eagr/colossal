@@ -1,16 +1,18 @@
 # colossal
 
-bigint-friendly arithmetic toolkit
+bigint-friendly math toolkit
 
-## Contract
+```
+npm i colossal
+```
 
-* Each function can take a mix of `number` and `bigint` as arguments.
-* If any of the arguments is a `bigint`, the function may return
-  * either a `bigint`
-  * or a collection of `bigint`s
-* If none of the arguments are `bigint`s, the function may return
-  * either a `number`
-  * or a collection of `number`s
+## Doc
+
+A *boxed* function can take a mix of `number` and `bigint` as arguments.
+If any of the arguments is a `bigint`,
+the function may either return a `bigint` or a collection of `bigint`s.
+Otherwise,
+the function may either return a `number` or a collection of `number`s.
 
 ## License
 

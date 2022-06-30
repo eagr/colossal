@@ -15,9 +15,10 @@
   },
   "keywords": [
     "math",
-    "number theory",
+    "statistics",
+    "bigint",
     "arithmetic",
-    "bigint"
+    "number theory"
   ],
   "author": "Julian Eager",
   "license": "MIT",
