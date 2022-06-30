@@ -31,7 +31,7 @@ function isPosInt (x:any) : boolean {
     return isPosBigint(x) || (isInt(x) && x > 0)
 }
 
-function assertRange (pred:boolean, msg:string) {
+function assert (pred:boolean, msg:string) {
     if (!pred) {
         const err = new RangeError(msg)
         console.error(err)
@@ -39,19 +39,19 @@ function assertRange (pred:boolean, msg:string) {
     }
 }
 
-function assertInt (x:any, msg='Expect an integer') {
-    assertRange(isInt(x), msg)
+function assertInt (x:unknown, msg='Expect an integer') {
+    assert(isInt(x), msg)
 }
 
-function assertNonNegInt (x:any, msg='Expect a non-negative integer') {
-    assertRange(isNonNegInt(x), msg)
+function assertNonNegInt (x:unknown, msg='Expect a non-negative integer') {
+    assert(isNonNegInt(x), msg)
 }
 
-function assertPosInt (x:any, msg='Expect a positive integer') {
-    assertRange(isPosInt(x), msg)
+function assertPosInt (x:unknown, msg='Expect a positive integer') {
+    assert(isPosInt(x), msg)
 }
 
-function isZero (x:any) : boolean {
+function isZero (x:unknown) : boolean {
     return x === 0 || x === 0n
 }
 
@@ -63,7 +63,7 @@ export {
     isNonNegInt,
     isPosInt,
 
-    assertRange,
+    assert,
     assertInt,
     assertNonNegInt,
     assertPosInt,

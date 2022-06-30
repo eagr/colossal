@@ -1,5 +1,5 @@
 import type { Num } from './interface'
-import { assertRange, isInt, isBigint, isZero } from './util/check'
+import { assert, isInt, isBigint, isZero } from './util/check'
 import { BigMath } from './util/bigint'
 
 function isPrime (x:Num) : boolean {
@@ -18,7 +18,7 @@ function isPrime (x:Num) : boolean {
 
 let _sieve:boolean[] = []
 function sieveOfEratosthenes (limit:Num) : boolean[] {
-    assertRange(isInt(limit) && limit >= 2, 'Expect an integer greater than 1')
+    assert(isInt(limit) && limit >= 2, 'Expect an integer greater than 1')
     const l = Number(limit)
     if (l < _sieve.length) return _sieve.slice(0, Number(l))
 
@@ -52,7 +52,7 @@ function primes <N extends Num> (limit:N) {
 }
 
 function factors <N extends Num> (n:N) {
-    assertRange(!isZero(n), 'Expect non-zero integers')
+    assert(!isZero(n), 'Expect non-zero integers')
 
     const big = isBigint(n)
     const fs = new Set([big ? 1n : 1])

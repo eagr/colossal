@@ -4,7 +4,7 @@
  */
 
 import type { Num } from '../interface'
-import { assertInt, assertNonNegInt, assertRange } from './check'
+import { assertInt, assertNonNegInt } from './check'
 
 function abs (x:Num) : bigint {
     assertInt(x)
@@ -40,7 +40,7 @@ function min (x:Num, ...xs:(Num)[]) : bigint {
 
 function sqrt (x:Num) : bigint {
     const b = BigInt(x)
-    assertRange(b >= 0n, 'sqrt of negative is not supported')
+    assertNonNegInt(b, 'sqrt of negative is not supported')
     if (b < 2n) return b
 
     function newton (n:bigint, guess:bigint) : bigint {

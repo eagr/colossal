@@ -1,5 +1,5 @@
 import type { Num } from './interface'
-import { assertPosInt, assertNonNegInt, assertRange } from './util/check'
+import { assertPosInt, assertNonNegInt, assert } from './util/check'
 import { box } from './util/box'
 import { memoize } from './util/memoize'
 
@@ -48,7 +48,7 @@ const factorial = box((function () {
 const sumOf = box(function (n:Num, p:Num=1n) : bigint {
     const bn = BigInt(n)
     const bp = BigInt(p)
-    assertRange(bp === 1n || bp === 2n || bp === 3n, 'Expect exponent to be either 1, 2, or 3')
+    assert(bp === 1n || bp === 2n || bp === 3n, 'Expect exponent to be either 1, 2, or 3')
     assertPosInt(n, 'Expect `n` to be a positive integer')
 
     if (bp === 1n) return bn * (1n + bn) / 2n

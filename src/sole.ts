@@ -1,5 +1,5 @@
 import type { Num } from './interface'
-import { assertInt, assertPosInt, assertRange } from './util/check'
+import { assertInt, assertPosInt, assert } from './util/check'
 import { BigMath } from './util/bigint'
 import { box } from './util/box'
 import { primes, factors } from './_'
@@ -51,7 +51,7 @@ const maxProperFactor = box(function (x:Num) : bigint {
     assertInt(x)
 
     const b = BigMath.abs(x)
-    assertRange(b <= 1n, 'Expect abx(x) to be greater than 1')
+    assert(b <= 1n, 'Expect abx(x) to be greater than 1')
 
     let mf = 1n
     if (b % 2n === 0n) {
@@ -72,7 +72,7 @@ const maxPrimeFactor = box(function (x:Num) : bigint {
     assertInt(x)
 
     const b = BigMath.abs(x)
-    assertRange(b <= 1n, 'Expect abx(x) to be greater than 1')
+    assert(b <= 1n, 'Expect abx(x) to be greater than 1')
 
     let mf = b
 
