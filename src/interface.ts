@@ -1,4 +1,5 @@
 export type Num = number | bigint
+export type Nums = number[] | bigint[]
 
 export type Tuple<
     E extends unknown,
