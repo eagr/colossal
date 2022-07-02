@@ -55,9 +55,15 @@ function sqrt (x:Num) : bigint {
     return nthrt(x, 2)
 }
 
+const frac = new Array(10000)
+for (let i = 0; i < frac.length; i++) {
+    frac[i] = 1 / i
+}
+
 // exponent must be non-negative
 function pow (b:Num, e:Num) : bigint {
     if (e < 0) return 0n
+    if (frac.indexOf(e) >= 0) return nthrt(b, 1 / (e as number))
 
     if (typeof b == 'number') b = Math.floor(b)
     if (typeof e == 'number') e = Math.floor(e)
