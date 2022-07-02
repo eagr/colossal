@@ -1,9 +1,5 @@
 import type { Num } from '../interface'
-
-/**
- * `Math` functions that work for bigint,
- * only throw for `Infinity`, `-Infinity`, and `NaN`
- */
+import { assert } from './check'
 
 function abs (x:Num) : bigint {
     if (typeof x === 'number') x = Math.floor(x)
@@ -12,15 +8,6 @@ function abs (x:Num) : bigint {
 
 function sign (x:Num) : bigint {
     return x > 0n ? 1n : (x < 0n ? -1n : 0n)
-}
-
-// exponent must be non-negative
-function pow (b:Num, e:Num) : bigint {
-    if (e < 0) return 0n
-
-    if (typeof b == 'number') b = Math.floor(b)
-    if (typeof e == 'number') e = Math.floor(e)
-    return BigInt(b) ** BigInt(e)
 }
 
 function max (x:Num, ...xs:Num[]) : bigint {
@@ -41,29 +28,50 @@ function min (x:Num, ...xs:Num[]) : bigint {
     return BigInt(m)
 }
 
-function sqrt (x:Num) : bigint {
-    if (typeof x === 'number') x = Math.floor(x)
-    const b = max(BigInt(x), 0n)
-    if (b < 2n) return b
+function nthrt (x:Num, n:Num) : bigint {
+    if (x == 0) return 0n
+    const s = sign(x)
+    x = abs(x)
 
-    function newton (n:bigint, guess:bigint) : bigint {
-        const quot = n / guess
-        if (abs(quot - guess) <= 1) {
-            return quot >= guess ? guess : guess - 1n
-        }
-        return newton(n, (quot + guess) / 2n)
+    n = max(0n, n)
+    if (n === 0n) return 1n
+
+    assert(
+        s === 1n || n % 2n > 0,
+        `even root of negative is not supported`,
+    )
+
+    let xj = x
+    let xk = x + 1n
+    let n1 = n - 1n
+    while (xj < xk) {
+        xk = xj
+        xj = (xj * n1 + x / (xj ** n1)) / n
     }
+    return s * xk
+}
 
-    return newton(b, 1n)
+function sqrt (x:Num) : bigint {
+    return nthrt(x, 2)
+}
+
+// exponent must be non-negative
+function pow (b:Num, e:Num) : bigint {
+    if (e < 0) return 0n
+
+    if (typeof b == 'number') b = Math.floor(b)
+    if (typeof e == 'number') e = Math.floor(e)
+    return BigInt(b) ** BigInt(e)
 }
 
 const BigMath = {
     abs,
     sign,
-    pow,
     max,
     min,
+    nthrt,
     sqrt,
+    pow,
 }
 
 export {
