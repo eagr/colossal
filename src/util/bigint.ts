@@ -1,46 +1,49 @@
+import type { Num } from '../interface'
+
 /**
- * Each function in the module takes integers as input, either `number` or `bigint`,
- * and always returns a `bigint`.
+ * `Math` functions that work for bigint,
+ * only throw for `Infinity`, `-Infinity`, and `NaN`
  */
 
-import type { Num } from '../interface'
-import { assertInt, assertNonNegInt } from './check'
-
 function abs (x:Num) : bigint {
-    assertInt(x)
-    return BigInt(x < 0 ? -x : x)
+    if (typeof x === 'number') x = Math.floor(x)
+    return BigInt(x < 0 ? -x : x);
 }
 
 function sign (x:Num) : bigint {
-    assertInt(x)
     return x > 0n ? 1n : (x < 0n ? -1n : 0n)
 }
 
+// exponent must be non-negative
 function pow (b:Num, e:Num) : bigint {
-    assertNonNegInt(e, 'Exponent must not be negative')
-    assertInt(b, 'Expect integers')
+    if (e < 0) return 0n
+
+    if (typeof b == 'number') b = Math.floor(b)
+    if (typeof e == 'number') e = Math.floor(e)
     return BigInt(b) ** BigInt(e)
 }
 
-function max (x:Num, ...xs:(Num)[]) : bigint {
+function max (x:Num, ...xs:Num[]) : bigint {
     let m = x
     for (let i = 0; i < xs.length; i++) {
         if (xs[i] > m) m = xs[i]
     }
+    if (typeof m === 'number') m = Math.floor(m)
     return BigInt(m)
 }
 
-function min (x:Num, ...xs:(Num)[]) : bigint {
+function min (x:Num, ...xs:Num[]) : bigint {
     let m = x
     for (let i = 0; i < xs.length; i++) {
         if (xs[i] < m) m = xs[i]
     }
+    if (typeof m === 'number') m = Math.floor(m)
     return BigInt(m)
 }
 
 function sqrt (x:Num) : bigint {
-    const b = BigInt(x)
-    assertNonNegInt(b, 'sqrt of negative is not supported')
+    if (typeof x === 'number') x = Math.floor(x)
+    const b = max(BigInt(x), 0n)
     if (b < 2n) return b
 
     function newton (n:bigint, guess:bigint) : bigint {
